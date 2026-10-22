@@ -44,3 +44,7 @@ These algorithms explore learning through experience and updating. estimates usi
 
 The code and explanations reflect my current learning progress of the subject.
 They may contain mistakes, simplifications, incomplete implementations, or misunderstandings.
+
+## Extra Resources
+
+OpenAI Spinningup: https://spinningup.openai.com/en/latest/

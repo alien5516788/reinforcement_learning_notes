@@ -79,7 +79,10 @@ fn main() {
      *   - Temporal Dfference Learning (TD)
      *     - SARSA
      *     - Q-learning
+     *   - DQN: TODO
      *   - Policy Gradient: TODO
+     *   - Actor-Critic: TODO
+     *   - PPO: TODO
      */
     println!("Reinforcement Learning")
 }
