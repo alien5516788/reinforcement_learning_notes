@@ -1,6 +1,7 @@
-pub mod dynamic_programming;
-pub mod monte_carlo_learning;
-pub mod temporal_difference_learning;
+mod dynamic_programming;
+mod monte_carlo_learning;
+mod temporal_difference_learning;
+mod policy_gradient;
 
 
 // Markov Decision Process
