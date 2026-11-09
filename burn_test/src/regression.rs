@@ -1,5 +1,3 @@
-// mod regression;
-
 use burn::prelude::*;
 use burn::nn::{Linear, LinearConfig};
 use burn::nn::loss::{MseLoss, Reduction};
@@ -32,7 +30,7 @@ impl Model {
     }
 }
 
-fn main() {
+pub fn run() {
     let device = Device::wgpu(Default::default())
         .autodiff();
 
