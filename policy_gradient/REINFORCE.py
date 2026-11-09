@@ -52,8 +52,7 @@ class Environment:
 parameter: dict[tuple[State, Action], float] = {}
 
 
-# Policy (π) - derived from θ
-# Uses softmax policy
+# Policy (π_θ) - softmax policy derived from θ
 #
 #   π_θ(a | s) -> e^θ(s, a) / Σ_a' e^θ(s, a')
 #
