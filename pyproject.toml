@@ -1,2 +1,17 @@
+[tool.pdm]
+distribution = false
+
 [tool.pdm.workspace]
-members = ["simulation", "algorithms"]
+members = ["algorithms", "gymnasium_test"]
+
+[project]
+name = "reinforement_learning_notes"
+version = "0.1.0"
+description = "Reinforcement learning notes and algorithm demos"
+authors = [
+    {name = "alien5516788",email = "93880176+alien5516788@users.noreply.github.com"},
+]
+dependencies = []
+requires-python = "==3.12.*"
+readme = "README.md"
+license = "MIT"
