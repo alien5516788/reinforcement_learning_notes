@@ -47,4 +47,5 @@ These algorithms explore learning through experience and updating. estimates usi
 
 ## Extra Resources
 
-OpenAI Spinningup: https://spinningup.openai.com/en/latest/
+- OpenAI Spinningup: https://spinningup.openai.com/en/latest/
+- Python Gymnasium: https://gymnasium.farama.org/

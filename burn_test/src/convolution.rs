@@ -1,5 +1,6 @@
 use burn::prelude::*;
-use burn::nn::{conv::{Conv2d, Conv2dConfig}, Linear, LinearConfig, Relu};
+use burn::nn::{Linear, LinearConfig, Relu};
+use burn::nn::conv::{Conv2d, Conv2dConfig};
 use burn::optim::{GradientsParams, AdamConfig};
 use burn::tensor::Distribution;
 
@@ -12,8 +13,8 @@ use burn::tensor::Distribution;
 struct Model {
     conv1: Conv2d,
     conv2: Conv2d,
-    relu: Relu,
-    fc: Linear,
+    relu: Relu, // Uses after every convolution layer (common choice is Relu)
+    fc: Linear, // Output layer activation (softmax for classification, linear for regression)
 }
 
 impl Model {
