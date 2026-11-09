@@ -1,3 +1,8 @@
+> [!Notice]
+> **Work in Progress**
+>
+> The current algorithm implementations are incomplete and contain placeholders. They are intended to demonstrate core concepts and are still under development. Some implementations may not be functional or fully accurate.
+
 # Reinforcement Learning Notes
 
 A hands-on journey into reinforcement learning, implemented in Python and Rust.
@@ -39,11 +44,6 @@ These algorithms explore learning from experience without requiring a known envi
 - Q-learning
 
 These algorithms explore learning through experience and updating. estimates using temporal-difference targets.
-
-## Disclaimer
-
-The code and explanations reflect my current learning progress of the subject.
-They may contain mistakes, simplifications, incomplete implementations, or misunderstandings.
 
 ## Extra Resources
 

@@ -1,3 +1,5 @@
+import random
+
 from ..reinforcement_learning.mdp import (
     GAMMA,
     Action,
@@ -34,15 +36,6 @@ class Environment:
 
     def reset(self):
         pass
-
-
-# Policy (π) - defined
-#
-#   π(a | s)
-#
-def policy(s: State, a: Action) -> float:
-    # Must decide the policy or improve it based on q-value
-    return 0.9
 
 
 # Q-value (Q) - learnt
@@ -94,10 +87,15 @@ def mc_control(episode: list[Step]):
 def action(s: State) -> Action:
     #  An action must be selected from a probability distribution
     #    based on π(a | s) for each action
-    for a in actions:
-        _ = policy(s, a)
 
-    return Action()
+    # Exploration
+    EPSILON = 0.1
+
+    if random.random() < EPSILON:
+        return random.choice(actions)
+
+    # Exploitation
+    return max(actions, key=lambda a: qvalue.get((s, a), 0.0))
 
 
 def train():
