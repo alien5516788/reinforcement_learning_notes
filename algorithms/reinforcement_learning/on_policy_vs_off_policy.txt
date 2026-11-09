@@ -1,0 +1,12 @@
+On-Policy
+
+- Agent learns the value of the exact same policy it is currently using to make decisions and take actions in the environment.
+- If the agent is using an ε-greedy policy to explore, the updates to its Q-values are calculated based on the actions that
+  ε-greedy policy actually takes (including the random exploratory steps).
+
+Off-Policy
+
+- The agent learns the optimal policy while potentially following a different behavior policy to explore the environment.
+- Even if the agent is exploring randomly using ε-greedy, the update rule evaluates the theoretical greedy policy (by taking
+  the absolute maximum Q-value for the next state, ignoring the random exploratory action). It learns the "best" way to do
+  things while still allowing itself to stumble around exploring.

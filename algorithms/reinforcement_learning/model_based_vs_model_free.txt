@@ -1,0 +1,15 @@
+Model-Based
+
+- In model-based learning, the agent builds or uses an explicit model of the environment (or is given one).
+- This model predicts two things for any given state and action:
+
+    P(s', r | s, a)
+
+- Agent uses this model instead of interacting with environment to learn
+
+Model-Free
+
+- In model-free learning, the agent does not have any access to a world model or predefined rules of an environment.
+- It doesn't know what state it will transition to or what reward it will get until it actually tries an action and sees what
+  happens.
+- It learns strictly through trial and error, mapping states and actions directly to values or policies

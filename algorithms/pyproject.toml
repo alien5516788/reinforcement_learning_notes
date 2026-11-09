@@ -1,0 +1,15 @@
+[project]
+name = "algorithms"
+version = "0.1.0"
+description = "Implementations of RL algorithms"
+authors = [
+    {name = "alien5516788",email = "93880176+alien5516788@users.noreply.github.com"},
+]
+dependencies = []
+requires-python = "==3.13.*"
+readme = "README.md"
+license = "MIT"
+
+
+[tool.pdm]
+distribution = false
