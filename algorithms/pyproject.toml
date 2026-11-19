@@ -13,3 +13,7 @@ license = "MIT"
 
 [tool.pdm]
 distribution = false
+
+[tool.pdm.scripts]
+mc_prediction = "python3 -m n2_monte_carlo_learning.mc_prediction"
+mc_control = "python3 -m n2_monte_carlo_learning.mc_control"

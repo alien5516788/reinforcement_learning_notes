@@ -1,47 +1,14 @@
-from ..reinforcement_learning.mdp import (
-    GAMMA,
-    Action,
-    State,
-    actions,
-    reward,
-)
+import random
 
-
-# Step
-# Episodic Step
-#
-class Step:
-    def __init__(self, s: State, r: float):
-        self.state = s  # Current state
-        self.reward = r  # Reward from next state
-
-
-# Environemnt
-#
-#   E(s, a) -> (s', r)
-#
-class Environment:
-    def __init__(self):
-        self.current_state: State = State()  # Or initial
-        self.terminal_state: State = State()
-
-    def step(self, a: Action) -> tuple[State, float]:
-        s_next = State()
-        r = reward(self.current_state, a, s_next)
-        self.current_state = s_next
-        return (self.current_state, r)
-
-    def reset(self):
-        pass
+from find_the_dock import Action, Environment, State
 
 
 # Policy (π) - defined
 #
-#   π(a | s)
+#   Uniform Random
 #
-def policy(s: State, a: Action) -> float:
-    # Must decide the policy based on value
-    return 0.9
+def policy(s: State) -> Action:
+    return random.choice(Action.all())
 
 
 # Value (V) - learnt
@@ -55,6 +22,19 @@ value: dict[State, float] = {}
 # Learning rate
 #
 ALPHA: float = 0.1
+
+
+# Gamma (γ)
+# Discount factor
+#
+GAMMA: float = 0.9
+
+
+# Step
+class Step:
+    def __init__(self, s: State, r: float):
+        self.state = s  # Current state
+        self.reward = r  # Reward from next state
 
 
 # Monte carlo update using sampled return
@@ -82,34 +62,30 @@ def mc_prediction(episode: list[Step]):
         g = step.reward + GAMMA * g
 
         # error = G_t - V(S_t)
-        error = g - value[step.state]
+        error = g - value.get(step.state, 0)
 
         # V(S_t) <- V(S_t) + α error
-        value[step.state] = value[step.state] + ALPHA * error
-
-
-def action(s: State) -> Action:
-    #  An action must be selected from a probability distribution
-    #    based on π(a | s) for each action
-    for a in actions:
-        _ = policy(s, a)
-
-    return Action()
+        value[step.state] = value.get(step.state, 0) + ALPHA * error
 
 
 def train():
-    environment = Environment()
-    converged = False
+    environment = Environment(title="MC Prediction")
 
-    while not converged:
-        environment.reset()
+    MAX_EPISODES = 3000
+    MAX_STEPS = 100
 
+    for ep_no in range(MAX_EPISODES):
         # Generate one complete episode
         episode: list[Step] = []
-        s = environment.current_state
 
-        while s != environment.terminal_state:
-            a = action(s)
+        s = environment.reset()
+
+        while s not in environment.terminal_states() and len(episode) < MAX_STEPS:
+            a = policy(s)
+
+            environment.debug_print(
+                f"Episode: {ep_no + 1}\nAction: {a.name}\nV(s): {value.get(s, 0)}"
+            )
 
             # E(s, a) -> (s', r)
             (s_next, r) = environment.step(a)
@@ -120,3 +96,10 @@ def train():
             s = s_next
 
         mc_prediction(episode)
+
+
+if __name__ == "__main__":
+    try:
+        train()
+    except Exception as e:
+        print(e)

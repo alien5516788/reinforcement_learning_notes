@@ -11,7 +11,7 @@ description = "Reinforcement learning notes and algorithm demos"
 authors = [
     {name = "alien5516788",email = "93880176+alien5516788@users.noreply.github.com"},
 ]
-dependencies = []
+dependencies = ["find-the-dock @ git+https://github.com/alien5516788/find_the_dock.git@main"]
 requires-python = "==3.12.*"
 readme = "README.md"
 license = "MIT"

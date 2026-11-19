@@ -1,16 +1,24 @@
 Stochastic Policy
-    - Outputs a probability
+    - Outputs a probability distribution over actions
+      (In real implementations, outputs the action directly based on the probability)
 
       π(a | s)
 
+Uniform Random policy
+    - Type of stchastic policy
+    - It assigns an equal probability to all the actions
+
+      π(a | s) = 1 / |A|
+
 ε-greedy Policy
-    - Special type of stochastic policy
-    - It assigns highest probability to best action and devide remaining ε probability among all the actions
+    - Type of stochastic policy
+    - It assigns highest probability to best action and divide remaining ε probability among all the actions
 
       π_ε(s, a) -> {
                     1 - ε + (ε / |A(s)|) ,  if a == arg max_a Q(s, a)
                     ε / |A(s)| ,            if a != arg max_a Q(s, a)
                  }
+
 
 Deterministic Policy
     - Outputs an action
@@ -19,10 +27,11 @@ Deterministic Policy
       μ(s)
 
 Greedy Policy
-    - Special type of deterministic policy
+    - Type of deterministic policy
     - Always chooses the best action
 
       π(s) -> arg max_a Q(s, a)
+
 
 Optimal policy
     - Policy that gives the best possible expectd reward
