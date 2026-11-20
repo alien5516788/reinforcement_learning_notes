@@ -59,8 +59,9 @@ class Step:
 #   Q(s, a) <- Q(s, a) + α * δ
 #
 # Note
+#   - On-policy, Model-free
 #   - S -> A -> R -> S -> A
-#   - SARSA calculate both current qvalue and next qvalue using the same policy (On-Policy)
+#   - SARSA calculate both current qvalue and next qvalue using the same policy
 #
 def td_update(step: Step, a_next: Action):
     # target = R + γQ(s', a')

@@ -68,7 +68,8 @@ class Step:
 #   Q(s, a) <- Q(s, a) + α * δ
 #
 # Note
-#   - Q-Learning calculates the next qvalue using action with highest qvalue (off-policy)
+#   - Off-policy, Model-free
+#   - Q-Learning calculates the next qvalue using action with highest qvalue
 #
 def td_update(step: Step):
     # a' = arg max_a' Q(s', a')
@@ -87,7 +88,7 @@ def td_update(step: Step):
 
 
 def train():
-    environment = Environment(title="SARSA")
+    environment = Environment(title="Q-Learning")
 
     MAX_ITERATIONS = 3000
     MAX_STEPS = 100
