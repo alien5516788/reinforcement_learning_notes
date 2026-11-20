@@ -52,8 +52,8 @@ class Step:
 #
 # Steps
 #   G_t = R_t+1 + γG_t+1
-#   error = G_t - Q(S_t, A_t)
-#   Q(S_t, A_t) <- Q(S_t, A_t) + α error
+#   δ = error = G_t - Q(S_t, A_t)
+#   Q(S_t, A_t) <- Q(S_t, A_t) + α * δ
 #
 # Q-value is learnt by calculating discounted return backward from the end of the episode
 #   then updating the q-value of each step state using the return
@@ -70,10 +70,10 @@ def mc_control(episode: list[Step]):
         # G_t = R_t+1 + γG_t+1
         g = step.reward + GAMMA * g
 
-        # error = G_t - Q(S_t, A_t)
+        # δ = G_t - Q(S_t, A_t)
         error = g - qvalue.get((step.state, step.action), 0)
 
-        # Q(S_t, A_t) <- Q(S_t) + α error
+        # Q(S_t, A_t) <- Q(S_t) + α * δ
         qvalue[(step.state, step.action)] = (
             qvalue.get((step.state, step.action), 0) + ALPHA * error
         )

@@ -17,3 +17,7 @@ distribution = false
 [tool.pdm.scripts]
 mc_prediction = "python3 -m n2_monte_carlo_learning.mc_prediction"
 mc_control = "python3 -m n2_monte_carlo_learning.mc_control"
+
+td_0 = "python3 -m n3_temporal_difference_learning.prediction.td_0"
+sarsa = "python3 -m n3_temporal_difference_learning.control.sarsa"
+q_learning = "python3 -m n3_temporal_difference_learning.control.q_learning"

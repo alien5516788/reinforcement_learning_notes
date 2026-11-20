@@ -43,8 +43,8 @@ class Step:
 #
 # Steps
 #   G_t = R_t+1 + γG_t+1
-#   error = G_t - V(S_t)
-#   V(S_t) <- V(S_t) + α error
+#   δ = error = G_t - V(S_t)
+#   V(S_t) <- V(S_t) + α * δ
 #
 # Value is learnt by calculating discounted return backward from the end of the episode
 #   then updating the value of each step state using the return
@@ -61,10 +61,10 @@ def mc_prediction(episode: list[Step]):
         # G_t = R_t+1 + γG_t+1
         g = step.reward + GAMMA * g
 
-        # error = G_t - V(S_t)
+        # δ = G_t - V(S_t)
         error = g - value.get(step.state, 0)
 
-        # V(S_t) <- V(S_t) + α error
+        # V(S_t) <- V(S_t) + α * δ
         value[step.state] = value.get(step.state, 0) + ALPHA * error
 
 
