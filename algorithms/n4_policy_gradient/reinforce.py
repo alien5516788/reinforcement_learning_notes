@@ -1,41 +1,31 @@
 import math
+import random
 
-from ..reinforcement_learning.mdp import (
-    GAMMA,
-    Action,
-    State,
-    actions,
-    reward,
-)
+from find_the_dock import Action, Environment, State
 
 
-# Step
-# Episodic Step
+# Policy (π_θ) - defined
 #
-class Step:
-    def __init__(self, s: State, a: Action, r: float):
-        self.state = s  # Current state
-        self.action = a  # Action taken at current state
-        self.reward = r  # Reward from next state
-
-
-# Environemnt
+#   softmax
 #
-#   E(s, a) -> (s', r)
-#
-class Environment:
-    def __init__(self):
-        self.current_state: State = State()  # Or initial
-        self.terminal_state: State = State()
+def policy(s: State) -> Action:
+    p = [softmax_policy_probability(s, a) for a in Action.all()]
 
-    def step(self, a: Action) -> tuple[State, float]:
-        s_next = State()
-        r = reward(self.current_state, a, s_next)
-        self.current_state = s_next
-        return (self.current_state, r)
+    return random.choices(Action.all(), weights=p, k=1)[0]
 
-    def reset(self):
-        pass
+
+def softmax_policy_probability(s: State, a: Action) -> float:
+    # e^θ(s, a)
+    numerator = math.exp(parameter.get((s, a), 0))
+
+    # Σ_a' e^θ(s, a')
+    denominator = 0.0
+
+    for aa in Action.all():
+        denominator += math.exp(parameter.get((s, aa), 0))
+
+    # e^θ(s, a) / Σ_b e^θ(s, a')
+    return numerator / denominator
 
 
 # Policy Parameter (θ) - learnt
@@ -52,37 +42,26 @@ class Environment:
 parameter: dict[tuple[State, Action], float] = {}
 
 
-# Policy (π_θ) - softmax policy derived from θ
-#
-#   π_θ(a | s) -> e^θ(s, a) / Σ_a' e^θ(s, a')
-#
-def policy(s: State, a: Action) -> float:
-    # e^θ(s, a)
-    numerator = math.exp(parameter[(s, a)])
-
-    # Σ_a' e^θ(s, a')
-    denominator = 0.0
-
-    for aa in actions:
-        denominator += math.exp(parameter[(s, aa)])
-
-    # e^θ(s, a) / Σ_b e^θ(s, a')
-    return numerator / denominator
-
-
-def action(s: State) -> Action:
-    # An action is sampled from the probability distribution
-    #   π(a | s) for the current state.
-    for a in actions:
-        _ = policy(s, a)
-
-    return Action()
-
-
 # Alpha (α)
 # Learning rate
 #
 ALPHA: float = 0.1
+
+
+# Gamma (γ)
+# Discount factor
+#
+GAMMA: float = 0.9
+
+
+# Step
+# Episodic Step
+#
+class Step:
+    def __init__(self, s: State, a: Action, r: float):
+        self.state = s  # Current state
+        self.action = a  # Action taken at current state
+        self.reward = r  # Reward from next state
 
 
 # Policy Gradient Update
@@ -122,7 +101,7 @@ def reinforce(episode: list[Step]):
         # G_t
         g_t = returns[t]
 
-        for a in actions:
+        for a in Action.all():
             # I(a_t == a)
             if step.action == a:
                 indicator = 1.0
@@ -131,7 +110,7 @@ def reinforce(episode: list[Step]):
 
             # ∇θ log π_θ(a_t | s_t)
             # ∂ log π_θ(a_t | s_t) /∂ θ(s_t, a)
-            gradient = indicator - policy(step.state, a)
+            gradient = indicator - softmax_policy_probability(step.state, a)
 
             # α γ^t G_t ∇θ log π_θ(a_t | s_t)
             update = ALPHA * pow(GAMMA, t) * g_t * gradient
@@ -142,22 +121,27 @@ def reinforce(episode: list[Step]):
     # Apply accumulated updates
     for key, value in gradients.items():
         # θ <- θ + α γ^t G_t ∇θ log π_θ(a_t | s_t)
-        parameter[key] = parameter[key] + value
+        parameter[key] = parameter.get(key, 0) + value
 
 
 def train():
-    environment = Environment()
-    converged = False
+    environment = Environment(title="REINFORCE")
 
-    while not converged:
-        environment.reset()
+    MAX_EPISODES = 3000
+    MAX_STEPS = 100
+
+    for ep_no in range(MAX_EPISODES):
+        s = environment.reset()
 
         # Generate one complete episode
         episode: list[Step] = []
-        s = environment.current_state
 
-        while s != environment.terminal_state:
-            a = action(s)
+        while s not in environment.terminal_states() and len(episode) < MAX_STEPS:
+            a = policy(s)
+
+            environment.debug_print(
+                f"Episode: {ep_no + 1}\nAction: {a.name}\nSoftmax Probability: {softmax_policy_probability(s, a)}"
+            )
 
             # E(s, a) -> (s', r)
             (s_next, r) = environment.step(a)
@@ -168,3 +152,10 @@ def train():
             s = s_next
 
         reinforce(episode)
+
+
+if __name__ == "__main__":
+    try:
+        train()
+    except Exception as e:
+        print(e)

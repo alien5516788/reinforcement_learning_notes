@@ -93,7 +93,7 @@ version = "0.1.0"
 requires_python = ">=3.12"
 git = "https://github.com/alien5516788/find_the_dock.git"
 ref = "main"
-revision = "9b378f4d4d04dff54bcec2867fdcf468379d6ec2"
+revision = "43aa451c8b648e271a0b15d8a7d7e55ae55bf571"
 summary = "A minimal 4x4 robot charging environment for reinforcement learning"
 groups = ["default"]
 dependencies = [

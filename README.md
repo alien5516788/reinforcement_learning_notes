@@ -11,7 +11,7 @@ The goal is to understand how these algorithms work, why they work, and how they
 
 ## Topics Covered
 
-### 1. Reinforcement Learning Fundamentals
+### Reinforcement Learning Fundamentals
 
 - Markov Decision Processes (MDPs)
 - States, actions, transition probabilities, and rewards
@@ -20,30 +20,32 @@ The goal is to understand how these algorithms work, why they work, and how they
 - State-value functions and action-value functions
 - Bellman equations
 
-### 2. Dynamic Programming
+### 1. Dynamic Programming
 
 - Policy evaluation
 - Policy iteration
 - Value iteration
 
-These algorithms explore how a known environment model can be used to evaluate policies and find optimal policies.
+### 2. Monte Carlo Learning
 
-### 3. Monte Carlo Learning
+- MC prediction
+- MC control
 
-- Monte Carlo prediction
-- Monte Carlo control
-- Learning from complete episodes
-- Estimating values from sampled returns
+### 3. Temporal Difference Learning
 
-These algorithms explore learning from experience without requiring a known environment model.
+- TD prediction
+  - TD(0)
+  - TD(λ)
+- TD control
+  - SARSA
+  - Expected-SARSA
+  - Q-learning
 
-### 4. Temporal-Difference Learning
+### 4. Policy Gradient Methods
 
-- Temporal-difference prediction
-- SARSA
-- Q-learning
-
-These algorithms explore learning through experience and updating. estimates using temporal-difference targets.
+- REINFORCE
+- PPO
+- Actor-Critic
 
 ## Extra Resources
 

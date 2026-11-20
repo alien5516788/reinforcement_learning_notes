@@ -22,3 +22,5 @@ td_0 = "python3 -m n3_temporal_difference_learning.prediction.td_0"
 sarsa = "python3 -m n3_temporal_difference_learning.control.sarsa"
 expected_sarsa = "python3 -m n3_temporal_difference_learning.control.expected_sarsa"
 q_learning = "python3 -m n3_temporal_difference_learning.control.q_learning"
+
+reinforce = "python3 -m n4_policy_gradient.reinforce"
