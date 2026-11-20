@@ -1,20 +1,15 @@
 from math import inf
 
-from ..reinforcement_learning.mdp import (
-    GAMMA,
-    Action,
-    State,
-    actions,
-    reward,
-    states,
-    world_model,
-)
+from . import GAMMA, Action, State, print_v_table, reward, world_model
 
 # Value (V) - learnt
 #
 #  V(s) -> v
 #
 value: dict[State, float] = {}
+
+for s in State.all():
+    value[s] = 0
 
 
 # Bellman equation for value iteration
@@ -26,16 +21,18 @@ value: dict[State, float] = {}
 #   by choosing the action with the highest expected return.
 #
 def value_iteration():
-    for s in states:
+    value_new = {}
+
+    for s in State.all():
         # Place holder until calculated
         v = -inf  # max_a Q(s, a)
 
-        for a in actions:
+        for a in Action.all():
             # Q(s, a)
             q = 0.0
 
             # Σ_s'
-            for s_next in states:
+            for s_next in State.all():
                 # Q(s, a) =+ Σ_s' P(s' | s, a) * [R(s, a, s') + γV(s')]
                 q += world_model(s, a, s_next) * (
                     reward(s, a, s_next) + (GAMMA * value[s_next])
@@ -45,15 +42,27 @@ def value_iteration():
             v = max(q, v)
 
         # V(s) <- max_a Q(s, a)
-        value[s] = v
+        value_new[s] = v
+
+    value.update(value_new)
 
 
 def train():
-    converged = False
+    MAX_ITERATIONS = 1000
+    DOCK = (0, 3)
 
-    while not converged:
+    print("Initial value")
+    print_v_table(value, DOCK)
+
+    for i in range(MAX_ITERATIONS):
         value_iteration()
 
+        print("Iteration: ", i + 1)
+        print_v_table(value, DOCK)
 
-# ISSUE: Value iteration updates v in place. and next iterations uses new value instead of evaluating with old value
-# TODO: Add a policy to use the learnt value
+
+if __name__ == "__main__":
+    try:
+        train()
+    except Exception as e:
+        print(e)

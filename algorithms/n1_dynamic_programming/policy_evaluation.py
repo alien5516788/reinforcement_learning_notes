@@ -1,20 +1,9 @@
-from ..reinforcement_learning.mdp import (
-    GAMMA,
-    Action,
-    State,
-    actions,
-    reward,
-    states,
-    world_model,
-)
+from . import GAMMA, Action, State, print_v_table, reward, world_model
 
 
-# Policy (π) - defined
-#
-#   π(a | s)
-#
-def policy(s: State, a: Action) -> float:
-    return 0.9
+def policy_probability(s: State, a: Action) -> float:
+    # Each action have an equal probability
+    return 1.0 / len(Action.all())
 
 
 # Value (V) - learnt
@@ -22,6 +11,9 @@ def policy(s: State, a: Action) -> float:
 #  V(s) -> v
 #
 value: dict[State, float] = {}
+
+for s in State.all():
+    value[s] = 0
 
 
 # Bellman equation for policy evaluation
@@ -31,17 +23,19 @@ value: dict[State, float] = {}
 # Value is improved by following a fixed policy
 #
 def policy_evaluation():
-    for s in states:
+    value_new = {}
+
+    for s in State.all():
         # v
         v = 0.0
 
         # Σ_a
-        for a in actions:
+        for a in Action.all():
             # π(a | s)
-            p = policy(s, a)
+            p = policy_probability(s, a)
 
             # Σ_s'
-            for s_next in states:
+            for s_next in State.all():
                 # v += π(a | s) * Σ_s' P(s' | s, a) * [R(s, a, s') + γV(s')]
                 v += (
                     p
@@ -50,11 +44,27 @@ def policy_evaluation():
                 )
 
         # V(s) <- v
-        value[s] = v
+        value_new[s] = v
+
+    value.update(value_new)
 
 
 def train():
-    converged = False
+    MAX_ITERATIONS = 1000
+    DOCK = (0, 3)
 
-    while not converged:
+    print("Initial value")
+    print_v_table(value, DOCK)
+
+    for i in range(MAX_ITERATIONS):
         policy_evaluation()
+
+        print("Iteration: ", i + 1)
+        print_v_table(value, DOCK)
+
+
+if __name__ == "__main__":
+    try:
+        train()
+    except Exception as e:
+        print(e)

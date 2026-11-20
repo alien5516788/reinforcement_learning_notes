@@ -15,6 +15,10 @@ license = "MIT"
 distribution = false
 
 [tool.pdm.scripts]
+policy_evaluation = "python3 -m n1_dynamic_programming.policy_evaluation"
+policy_iteration = "python3 -m n1_dynamic_programming.policy_iteration"
+value_iteration = "python3 -m n1_dynamic_programming.value_iteration"
+
 mc_prediction = "python3 -m n2_monte_carlo_learning.mc_prediction"
 mc_control = "python3 -m n2_monte_carlo_learning.mc_control"
 
