@@ -112,7 +112,13 @@ def train():
             a = policy(s)
 
             environment.debug_print(
-                f"Iteration: {i + 1}\nAction: {a.name}\nQ(s, a): {qvalue.get((s, a), 0)}"
+                f"Iteration: {i + 1}"
+                + f"\nAction: {a.name}"
+                + f"\nQ: {round(qvalue.get((s, a), 0), 4)}"
+                + f"\n\nUp: {round(qvalue.get((s, Action.UP), 0), 4)}"
+                + f"\nDown: {round(qvalue.get((s, Action.DOWN), 0), 4)}"
+                + f"\nLeft: {round(qvalue.get((s, Action.LEFT), 0), 4)}"
+                + f"\nRight: {round(qvalue.get((s, Action.RIGHT), 0), 4)}"
             )
 
             # E(s, a) -> (s', r)

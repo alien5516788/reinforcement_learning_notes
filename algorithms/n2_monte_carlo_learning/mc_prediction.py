@@ -84,7 +84,9 @@ def train():
             a = policy(s)
 
             environment.debug_print(
-                f"Episode: {ep_no + 1}\nAction: {a.name}\nV(s): {value.get(s, 0)}"
+                f"Iteration: {ep_no + 1}"
+                + f"\nAction: {a.name}"
+                + f"\nV: {round(value.get(s, 0), 4)}"
             )
 
             # E(s, a) -> (s', r)

@@ -140,7 +140,13 @@ def train():
             a = policy(s)
 
             environment.debug_print(
-                f"Episode: {ep_no + 1}\nAction: {a.name}\nSoftmax Probability: {softmax_policy_probability(s, a)}"
+                f"Episode: {ep_no + 1}"
+                + f"\nAction: {a.name}"
+                + f"\nProbability: {round(softmax_policy_probability(s, a), 4)}"
+                + f"\n\nUp: {round(softmax_policy_probability(s, Action.UP), 4)}"
+                + f"\nDown: {round(softmax_policy_probability(s, Action.DOWN), 4)}"
+                + f"\nLeft: {round(softmax_policy_probability(s, Action.LEFT), 4)}"
+                + f"\nRight: {round(softmax_policy_probability(s, Action.RIGHT), 4)}"
             )
 
             # E(s, a) -> (s', r)
