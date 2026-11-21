@@ -27,6 +27,7 @@ def value_iteration():
         # Place holder until calculated
         v = -inf  # max_a Q(s, a)
 
+        # Implicit policy to select an action
         for a in Action.all():
             # Q(s, a)
             q = 0.0
@@ -38,7 +39,7 @@ def value_iteration():
                     reward(s, a, s_next) + (GAMMA * value[s_next])
                 )
 
-            # max_a Q(s, a)
+            # update max_a Q(s, a)
             v = max(q, v)
 
         # V(s) <- max_a Q(s, a)

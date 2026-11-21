@@ -9,12 +9,12 @@ from find_the_dock import Action, Environment, State
 #   softmax
 #
 def policy(s: State) -> Action:
-    p = [softmax_policy_probability(s, a) for a in Action.all()]
+    p = [policy_probability(s, a) for a in Action.all()]
 
     return random.choices(Action.all(), weights=p, k=1)[0]
 
 
-def softmax_policy_probability(s: State, a: Action) -> float:
+def policy_probability(s: State, a: Action) -> float:
     # e^θ(s, a)
     numerator = math.exp(parameter.get((s, a), 0))
 
@@ -110,7 +110,7 @@ def reinforce(episode: list[Step]):
 
             # ∇θ log π_θ(a_t | s_t)
             # ∂ log π_θ(a_t | s_t) /∂ θ(s_t, a)
-            gradient = indicator - softmax_policy_probability(step.state, a)
+            gradient = indicator - policy_probability(step.state, a)
 
             # α γ^t G_t ∇θ log π_θ(a_t | s_t)
             update = ALPHA * pow(GAMMA, t) * g_t * gradient
@@ -142,11 +142,11 @@ def train():
             environment.debug_print(
                 f"Episode: {ep_no + 1}"
                 + f"\nAction: {a.name}"
-                + f"\nProbability: {round(softmax_policy_probability(s, a), 4)}"
-                + f"\n\nUp: {round(softmax_policy_probability(s, Action.UP), 4)}"
-                + f"\nDown: {round(softmax_policy_probability(s, Action.DOWN), 4)}"
-                + f"\nLeft: {round(softmax_policy_probability(s, Action.LEFT), 4)}"
-                + f"\nRight: {round(softmax_policy_probability(s, Action.RIGHT), 4)}"
+                + f"\nProbability: {round(policy_probability(s, a), 4)}"
+                + f"\n\nUp: {round(policy_probability(s, Action.UP), 4)}"
+                + f"\nDown: {round(policy_probability(s, Action.DOWN), 4)}"
+                + f"\nLeft: {round(policy_probability(s, Action.LEFT), 4)}"
+                + f"\nRight: {round(policy_probability(s, Action.RIGHT), 4)}"
             )
 
             # E(s, a) -> (s', r)

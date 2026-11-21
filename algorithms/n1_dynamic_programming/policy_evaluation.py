@@ -1,6 +1,10 @@
 from . import GAMMA, Action, State, print_v_table, reward, world_model
 
 
+# Policy (π) - fixed
+#
+#   π(a | s)
+#
 def policy_probability(s: State, a: Action) -> float:
     # Each action have an equal probability
     return 1.0 / len(Action.all())
