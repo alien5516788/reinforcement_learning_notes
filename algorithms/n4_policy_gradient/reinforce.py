@@ -3,6 +3,9 @@ import random
 
 from find_the_dock import Action, Environment, State
 
+ALPHA: float = 0.1
+GAMMA: float = 0.9
+
 
 # Policy (π_θ) - defined
 #
@@ -40,18 +43,6 @@ def policy_probability(s: State, a: Action) -> float:
 # by that network.
 #
 parameter: dict[tuple[State, Action], float] = {}
-
-
-# Alpha (α)
-# Learning rate
-#
-ALPHA: float = 0.1
-
-
-# Gamma (γ)
-# Discount factor
-#
-GAMMA: float = 0.9
 
 
 # Step

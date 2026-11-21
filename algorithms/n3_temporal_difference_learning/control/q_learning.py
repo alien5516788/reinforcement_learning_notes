@@ -2,6 +2,10 @@ import random
 
 from find_the_dock import Action, Environment, State
 
+EPSILON = 0.1
+ALPHA: float = 0.1
+GAMMA: float = 0.9
+
 
 # Policy (π) - defined
 #
@@ -9,8 +13,6 @@ from find_the_dock import Action, Environment, State
 #
 def policy_1(s: State) -> Action:
     # Exploration
-    EPSILON = 0.1
-
     if random.random() < EPSILON:
         return random.choice(Action.all())
 
@@ -33,18 +35,6 @@ def policy_2(s: State) -> Action:
 #  Q(s, a) -> q
 #
 qvalue: dict[tuple[State, Action], float] = {}
-
-
-# Alpha (α)
-# Learning rate
-#
-ALPHA: float = 0.1
-
-
-# Gamma (γ)
-# Discount factor
-#
-GAMMA: float = 0.9
 
 
 # Step

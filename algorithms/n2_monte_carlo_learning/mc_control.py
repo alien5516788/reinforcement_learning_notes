@@ -2,6 +2,10 @@ import random
 
 from find_the_dock import Action, Environment, State
 
+EPSILON = 0.1
+ALPHA: float = 0.1
+GAMMA: float = 0.9
+
 
 # Policy (π) - defined
 #
@@ -9,8 +13,6 @@ from find_the_dock import Action, Environment, State
 #
 def policy(s: State) -> Action:
     # Exploration
-    EPSILON = 0.1
-
     if random.random() < EPSILON:
         return random.choice(Action.all())
 
@@ -24,18 +26,6 @@ def policy(s: State) -> Action:
 #  Q(s, a) -> q
 #
 qvalue: dict[tuple[State, Action], float] = {}
-
-
-# Alpha (α)
-# Learning rate
-#
-ALPHA: float = 0.1
-
-
-# Gamma (γ)
-# Discount factor
-#
-GAMMA: float = 0.9
 
 
 # Step
@@ -59,6 +49,7 @@ class Step:
 #   then updating the q-value of each step state using the return
 #
 def mc_control(episode: list[Step]):
+
     # We start as t+1 = terminal step which is not included in the episode
     #   and t = last step in the episode
 
@@ -73,7 +64,7 @@ def mc_control(episode: list[Step]):
         # δ = G_t - Q(S_t, A_t)
         error = g - qvalue.get((step.state, step.action), 0)
 
-        # Q(S_t, A_t) <- Q(S_t) + α * δ
+        # Q(S_t, A_t) <- Q(S_t, A_t) + α * δ
         qvalue[(step.state, step.action)] = (
             qvalue.get((step.state, step.action), 0) + ALPHA * error
         )

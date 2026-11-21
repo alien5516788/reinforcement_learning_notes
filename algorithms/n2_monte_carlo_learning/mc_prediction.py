@@ -2,10 +2,13 @@ import random
 
 from find_the_dock import Action, Environment, State
 
+ALPHA: float = 0.1
+GAMMA: float = 0.9
+
 
 # Policy (π) - defined
 #
-#   Uniform Random
+#   Uniform-Random
 #
 def policy(s: State) -> Action:
     return random.choice(Action.all())
@@ -16,18 +19,6 @@ def policy(s: State) -> Action:
 #  V(s) -> v
 #
 value: dict[State, float] = {}
-
-
-# Alpha (α)
-# Learning rate
-#
-ALPHA: float = 0.1
-
-
-# Gamma (γ)
-# Discount factor
-#
-GAMMA: float = 0.9
 
 
 # Step
